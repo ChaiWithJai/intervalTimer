@@ -1,0 +1,10 @@
+.workoutDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+}
+
+input[type=submit] {
+    background-color: red;
+    margin-top: 4px;
+}
