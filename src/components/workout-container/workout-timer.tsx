@@ -17,11 +17,13 @@ const WorkoutTimer: React.FC<IWorkoutDetailsProps> = ({numberOfSets, roundDurati
     const [{timeLeft, timeOver}, setTimer] = useState<ITimer>({timeLeft: Number(roundDuration), timeOver: addSeconds(new Date(), Number(roundDuration))});
 
     const nextInterval = () => {
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance("Lets get it"))
         setCurrentInterval({isRest: false, count: count+1});
         setTimer({timeLeft: Number(roundDuration), timeOver: addSeconds(new Date(), Number(roundDuration))})
     }
 
     const restInterval = () => {
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance("Take that break, champ"));
         setTimer({timeLeft: Number(restDuration), timeOver: addSeconds(new Date(), Number(restDuration))});
         setCurrentInterval({count, isRest: true});
     }
