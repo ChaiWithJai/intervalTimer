@@ -15,6 +15,7 @@ interface ITimer {
 const WorkoutTimer: React.FC<IWorkoutDetailsProps> = ({numberOfSets, roundDuration, restDuration, endOfRoundWarning}) => {
     const [{count, isRest}, setCurrentInterval] = useState<IInterval>({count: 1, isRest: false});
     const [{timeLeft, timeOver}, setTimer] = useState<ITimer>({timeLeft: Number(roundDuration), timeOver: addSeconds(new Date(), Number(roundDuration))});
+    const[isComplete, setIsComplete] = useState(false);
 
     const nextInterval = () => {
         window.speechSynthesis.speak(new SpeechSynthesisUtterance("Lets get it"))
@@ -29,7 +30,9 @@ const WorkoutTimer: React.FC<IWorkoutDetailsProps> = ({numberOfSets, roundDurati
     }
     useEffect(() => {
         const interval = setInterval(() => setTimer({timeOver, timeLeft: differenceInSeconds(timeOver, new Date())}), 500);
-        if (timeLeft <= 0) {
+        if (Number(numberOfSets) < count) {
+            setIsComplete(true);
+        } else if (timeLeft <= 0) {
             isRest ? nextInterval() : restInterval();
             clearInterval(interval);
             return;
@@ -39,9 +42,15 @@ const WorkoutTimer: React.FC<IWorkoutDetailsProps> = ({numberOfSets, roundDurati
     
     return (
         <>
-            <h1>{timeLeft}</h1>
-            <p>Current Round:  {count}</p>
-            <p>{isRest ? 'Rest up!' : `Let's get it!`}</p>
+            {!isComplete ? 
+            <>
+                <h1>{timeLeft}</h1>
+                <p>Current Round:  {count}</p>
+                <p>{isRest ? 'Rest up!' : `Let's get it!`}</p>
+            </>
+            :
+            <img src="https://media3.giphy.com/media/dkGhBWE3SyzXW/giphy.gif?cid=ecf05e4731236f87a709d266c8816fae59c14691cbf4c642&rid=giphy.gif" />
+            }
         </>
     );
 };
