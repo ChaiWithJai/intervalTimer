@@ -31,6 +31,8 @@ const WorkoutDetails: React.FC = () => {
         setIsStarted(true);
     }
 
+    const handleReset = () => setIsStarted(false);
+
     const {numberOfSets, roundDuration, restDuration, endOfRoundWarning} = form;
     
     return (
@@ -43,7 +45,7 @@ const WorkoutDetails: React.FC = () => {
                 <FormInput name="endOfRoundWarning" label="End of Round Warning (in seconds)" type="select" options={["", "10","30"]} value={endOfRoundWarning} onChange={handleOnChange} />
                 <input type="submit" value="Start Workout" />
             </form>
-            {isStarted && <WorkoutTimer numberOfSets={numberOfSets} roundDuration={roundDuration} restDuration={restDuration} endOfRoundWarning={endOfRoundWarning} />}
+            {isStarted && <WorkoutTimer numberOfSets={numberOfSets} roundDuration={roundDuration} restDuration={restDuration} endOfRoundWarning={endOfRoundWarning} handleReset={handleReset} />}
         </>
     )
 }
