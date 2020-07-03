@@ -48,14 +48,12 @@ const WorkoutTimer: React.FC<allProps> = ({handleReset, numberOfSets, roundDurat
 
     useEffect(() => {
         const interval = setInterval(() => setTimer({timeOver, timeLeft: differenceInSeconds(timeOver, new Date())}), 200);
-        if (Number(numberOfSets) < count) {
-            setIsComplete(true);
-        } else if (timeLeft <= 0) {
-            isRest ? nextInterval() : restInterval();
-            clearInterval(interval);
-            return;
-        } else if (timeLeft === Number(endOfRoundWarning) && !isRest) speak("Finish up strong, champ!")
+        
+        if (Number(numberOfSets) < count) setIsComplete(true);
+        else if (timeLeft <= 0) isRest ? nextInterval() : restInterval();
+        else if (timeLeft === Number(endOfRoundWarning) && !isRest) speak("Finish up strong, champ!");
         else if (isPaused) clearInterval(interval);
+        
         return () => clearInterval(interval);
     }, [timeLeft, isRest, timeOver, isPaused, nextInterval, restInterval]);
     
