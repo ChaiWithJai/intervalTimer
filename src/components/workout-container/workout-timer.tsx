@@ -44,6 +44,7 @@ const WorkoutTimer: React.FC<allProps> = ({handleReset, numberOfSets, roundDurat
 
     const handlePause = () => {
         setCurrentInterval({isRest, count, isPaused: !isPaused});
+        if (isPaused) setTimer({timeLeft, timeOver: addSeconds(new Date(), Number(timeLeft))})
     }
 
     useEffect(() => {
