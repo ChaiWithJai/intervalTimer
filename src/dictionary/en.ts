@@ -4,5 +4,7 @@ export default {
     "timer.pause": "Pause",
     "timer.break": "Take that break, champ",
     "timer.warning": "Finish up strong, champ",
+    "timer.currentRound": "Current Round:  ",
+    "timer.reset": "Rest",
     "form.header": "Workout Interval Details"
 }

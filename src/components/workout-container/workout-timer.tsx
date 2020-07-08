@@ -22,10 +22,10 @@ const CONGRATS_GIPHY_URL = "https://media3.giphy.com/media/dkGhBWE3SyzXW/giphy.g
 
 type allProps = IProps & IWorkoutDetailsProps;
 
-const WorkoutTimer: React.FC<allProps> = ({handleReset, numberOfSets, roundDuration, restDuration, endOfRoundWarning}) => {
+const WorkoutTimer: React.FC<allProps> = ({handleReset, numberOfSets, roundDuration, restDuration, endOfRoundWarning, warmUp, coolDown}) => {
     const [{count, isRest, isPaused}, setCurrentInterval] = useState<IInterval>({count: 1, isRest: false, isPaused: false});
     const [{timeLeft, timeOver}, setTimer] = useState<ITimer>({timeLeft: Number(roundDuration), timeOver: addSeconds(new Date(), Number(roundDuration))});
-    const[isComplete, setIsComplete] = useState(false);
+    const [isComplete, setIsComplete] = useState(false);
 
     const speech = window.speechSynthesis;
     const speak = (message: string) => {
@@ -66,10 +66,10 @@ const WorkoutTimer: React.FC<allProps> = ({handleReset, numberOfSets, roundDurat
             {!isComplete ? 
             <>
                 <h1>{timeLeft}</h1>
-                <p>Current Round:  {count}</p>
+                <p>{dict["timer.currentRound"]}{count}</p>
                 <p>{isRest ? dict["timer.rest"] : dict["timer.go"]}</p>
                 <button onClick={handlePause}>{!isPaused ? dict["timer.pause"] : dict["timer.go"]}</button>
-                <button onClick={handleReset}>Reset</button>
+                <button onClick={handleReset}>{dict["timer.reset"]}</button>
             </>
             :
             <img src={CONGRATS_GIPHY_URL} />
