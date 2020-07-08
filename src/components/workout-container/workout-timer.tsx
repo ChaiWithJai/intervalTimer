@@ -1,6 +1,7 @@
 import {addSeconds, differenceInSeconds} from 'date-fns';
 import React, {useState, useEffect} from 'react';
 import {IFormState as IWorkoutDetailsProps} from './workout-details';
+import dict from '../../dictionary/en';
 
 interface IInterval {
     count: number,
@@ -17,6 +18,8 @@ interface IProps {
     handleReset: () => void;
 }
 
+const CONGRATS_GIPHY_URL = "https://media3.giphy.com/media/dkGhBWE3SyzXW/giphy.gif";
+
 type allProps = IProps & IWorkoutDetailsProps;
 
 const WorkoutTimer: React.FC<allProps> = ({handleReset, numberOfSets, roundDuration, restDuration, endOfRoundWarning}) => {
@@ -31,13 +34,13 @@ const WorkoutTimer: React.FC<allProps> = ({handleReset, numberOfSets, roundDurat
     }
 
     const nextInterval = () => {
-        speak("Lets get it");
+        speak(dict["timer.go"]);
         setCurrentInterval({isPaused, isRest: false, count: count+1});
         setTimer({timeLeft: Number(roundDuration), timeOver: addSeconds(new Date(), Number(roundDuration))})
     }
 
     const restInterval = () => {
-        speak("Take that break, champ");
+        speak(dict["timer.break"]);
         setTimer({timeLeft: Number(restDuration), timeOver: addSeconds(new Date(), Number(restDuration))});
         setCurrentInterval({isPaused, count, isRest: true});
     }
@@ -52,7 +55,7 @@ const WorkoutTimer: React.FC<allProps> = ({handleReset, numberOfSets, roundDurat
         
         if (Number(numberOfSets) < count) setIsComplete(true);
         else if (timeLeft <= 0) isRest ? nextInterval() : restInterval();
-        else if (timeLeft === Number(endOfRoundWarning) && !isRest) speak("Finish up strong, champ!");
+        else if (timeLeft === Number(endOfRoundWarning) && !isRest) speak(dict["timer.warning"]);
         else if (isPaused) clearInterval(interval);
         
         return () => clearInterval(interval);
@@ -64,12 +67,12 @@ const WorkoutTimer: React.FC<allProps> = ({handleReset, numberOfSets, roundDurat
             <>
                 <h1>{timeLeft}</h1>
                 <p>Current Round:  {count}</p>
-                <p>{isRest ? 'Rest up!' : `Let's get it!`}</p>
-                <button onClick={handlePause}>Pause</button>
+                <p>{isRest ? dict["timer.rest"] : dict["timer.go"]}</p>
+                <button onClick={handlePause}>{!isPaused ? dict["timer.pause"] : dict["timer.go"]}</button>
                 <button onClick={handleReset}>Reset</button>
             </>
             :
-            <img src="https://media3.giphy.com/media/dkGhBWE3SyzXW/giphy.gif?cid=ecf05e4731236f87a709d266c8816fae59c14691cbf4c642&rid=giphy.gif" />
+            <img src={CONGRATS_GIPHY_URL} />
             }
         </>
     );

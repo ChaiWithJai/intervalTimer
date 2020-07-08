@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import FormInput from '../ui-components/form-input';
 import WorkoutTimer from './workout-timer';
 import './workout-details.css'
+import dict from '../../dictionary/en';
 
 export interface IFormState {
     numberOfSets: string;
@@ -38,7 +39,7 @@ const WorkoutDetails: React.FC = () => {
     return (
         <>
             <form className="workoutDetailsContainer" onSubmit={handleOnSubmit}>
-                <h1>Workout Interval Details</h1>
+                <h1>{dict["form.header"]}</h1>
                 <FormInput name="numberOfSets" label="Number of Sets" value={numberOfSets} onChange={handleOnChange} />
                 <FormInput name="roundDuration" label="Round Duration (in seconds)" value={roundDuration} onChange={handleOnChange} />
                 <FormInput name="restDuration" label="Rest Duration (in seconds)" min="0" value={restDuration} onChange={handleOnChange} />
